@@ -25,6 +25,18 @@
 
 <br>
 
+## ✦ Скриншоты
+
+<div align="center">
+<img src="assets/screens/main.jpg" alt="Главный экран" width="240">
+&nbsp;&nbsp;
+<img src="assets/screens/connected.jpg" alt="Подключено" width="240">
+&nbsp;&nbsp;
+<img src="assets/screens/servers.jpg" alt="Серверы" width="240">
+<br>
+<sub><b>Главный экран</b> · <b>Подключено</b> · <b>Серверы</b></sub>
+</div>
+
 ## ✦ Возможности
 
 | | |
@@ -66,17 +78,6 @@
 Не хотите устанавливать? Скачайте `Aurora-portable.exe` и просто запустите его.
 
 </details>
-
-## ✦ Обновления
-
-Aurora для Windows умеет обновляться сам. Откройте **Настройки → Обновления** и в поле **GitHub-репозиторий** укажите:
-
-```
-heavilyoffc/aurora-vpn
-```
-
-Когда здесь выйдет новая версия, приложение предложит её скачать.
-
 ## ✦ Вопросы
 
 <details>
