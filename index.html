@@ -1,0 +1,587 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aurora VPN</title>
+<meta name="description" content="Бесплатное приложение для VPN для Android и Windows. Вставьте свой ключ и нажмите одну кнопку.">
+<meta property="og:title" content="Aurora VPN">
+<meta property="og:description" content="Бесплатное приложение для VPN для Android и Windows. Вставьте свой ключ и нажмите одну кнопку.">
+<meta property="og:image" content="https://heavilyoffc.github.io/aurora-vpn/assets/screens/pc/pc-main.png">
+<meta name="theme-color" content="#04060a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%233ef2b0%22%2F%3E%3Cstop%20offset%3D%22.5%22%20stop-color%3D%22%233bc4f7%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%238f7cf8%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2218%22%20fill%3D%22url(%23g)%22%2F%3E%3Ccircle%20cx%3D%2232%22%20cy%3D%2232%22%20r%3D%2214%22%20fill%3D%22%2304060a%22%2F%3E%3C%2Fsvg%3E">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<style>
+/* Layout: тёмная продуктовая страница в духе Apple — крупная типографика по центру, живой макет приложения, плитки-«бенто», тарифы. Один мотив: полярное сияние. */
+:root {
+  --bg: #04060a;
+  --surface: #0d1117;
+  --surface-2: #151b23;
+  --fg: #f4f7fb;
+  --muted: #8a94a6;
+  --line: rgba(190, 215, 255, 0.09);
+  --green: #3ef2b0;
+  --cyan: #3bc4f7;
+  --violet: #8f7cf8;
+  --on-accent: #03140d;
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Segoe UI", Roboto, sans-serif;
+  --mono: ui-monospace, "SF Mono", "Cascadia Mono", Consolas, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font);
+  font-size: 17px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+  z-index: 60; background: rgba(4, 6, 10, 0.8);
+}
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; border-radius: 8px; }
+
+.wrap {
+  width: 100%; max-width: 1080px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+/* ---------- навигация ---------- */
+.nav {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50;
+  background: rgba(4, 6, 10, 0.72);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid var(--line);
+}
+.nav .wrap { display: flex; align-items: center; gap: 24px; height: 52px; }
+.logo { display: flex; align-items: center; gap: 9px; font-weight: 700; font-size: 17px; letter-spacing: -0.01em; }
+.logo-mark {
+  width: 22px; height: 22px; border-radius: 7px;
+  background: conic-gradient(from 200deg, var(--green), var(--cyan), var(--violet), var(--green));
+  position: relative;
+}
+.logo-mark::after { content: ""; position: absolute; inset: 5px; border-radius: 50%; background: var(--bg); }
+.nav-links { display: flex; gap: 22px; margin-left: auto; font-size: 13px; color: var(--muted); }
+.nav-links a:hover { color: var(--fg); }
+.nav-cta {
+  font-size: 13px; font-weight: 600; padding: 6px 14px; border-radius: 999px;
+  background: var(--fg); color: var(--bg);
+}
+@media (max-width: 640px) { .nav-links { display: none; } .nav-cta { margin-left: auto; } }
+
+/* ---------- первый экран ---------- */
+.hero {
+  position: relative; overflow: hidden; text-align: center;
+  margin-top: calc(-1 * env(safe-area-inset-top, 0px));
+  padding-top: calc(env(safe-area-inset-top, 0px) + 72px);
+  padding-bottom: 40px;
+}
+.aurora { position: absolute; inset: -20% -10% auto; height: 760px; pointer-events: none; filter: blur(70px); opacity: 0.55; }
+.aurora span { position: absolute; border-radius: 50%; mix-blend-mode: screen; }
+.aurora .a1 { width: 620px; height: 260px; left: 8%; top: 120px; background: var(--green); transform: rotate(-14deg); animation: drift 14s ease-in-out infinite alternate; }
+.aurora .a2 { width: 560px; height: 220px; right: 6%; top: 80px; background: var(--cyan); transform: rotate(12deg); animation: drift 18s ease-in-out infinite alternate-reverse; }
+.aurora .a3 { width: 420px; height: 200px; left: 38%; top: 230px; background: var(--violet); opacity: 0.7; animation: drift 22s ease-in-out infinite alternate; }
+@keyframes drift { from { translate: -40px 0; } to { translate: 60px 30px; } }
+.hero .wrap { position: relative; }
+.eyebrow { font-size: 15px; font-weight: 600; color: var(--green); letter-spacing: 0.02em; }
+h1 {
+  margin: 10px auto 0; max-width: 14ch;
+  font-size: clamp(2.6rem, 7.4vw, 5.6rem); line-height: 1.02; font-weight: 800;
+  letter-spacing: -0.045em; text-wrap: balance;
+}
+.glow-text {
+  background: linear-gradient(100deg, var(--green) 10%, var(--cyan) 55%, var(--violet) 95%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.lead { margin: 20px auto 0; max-width: 34ch; font-size: clamp(1.1rem, 2.2vw, 1.4rem); color: var(--muted); line-height: 1.4; text-wrap: balance; }
+.lead b { color: var(--fg); font-weight: 600; }
+.actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 14px 28px; margin-top: 30px; align-items: center; }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 13px 26px; border-radius: 999px; border: 0; cursor: pointer;
+  font-size: 17px; font-weight: 600; background: var(--green); color: var(--on-accent);
+  transition: transform .2s ease, box-shadow .2s ease;
+  box-shadow: 0 0 0 0 rgba(62, 242, 176, 0);
+}
+.btn:hover { transform: translateY(-1px); box-shadow: 0 8px 30px -6px rgba(62, 242, 176, 0.55); }
+.link { color: var(--cyan); font-size: 17px; }
+.link:hover { text-decoration: underline; }
+.link::after { content: " ›"; }
+
+/* ---------- макет телефона ---------- */
+.device-stage { display: flex; justify-content: center; margin-top: 56px; }
+.phone {
+  width: 300px; max-width: 100%; aspect-ratio: 300 / 620;
+  border-radius: 52px; padding: 11px;
+  background: linear-gradient(160deg, #2b313b, #0b0e13 40%, #1c222b);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 60px 120px -30px rgba(59, 196, 247, 0.35), 0 30px 60px -20px rgba(0,0,0,0.8);
+}
+.screen {
+  position: relative; height: 100%; border-radius: 42px; overflow: hidden;
+  background: #070a0f; display: flex; flex-direction: column; align-items: center;
+  padding: 18px 18px 20px; text-align: left;
+}
+.screen::before {
+  content: ""; position: absolute; inset: auto -40% -30%; height: 70%;
+  background: radial-gradient(closest-side, rgba(62,242,176,0.55), rgba(59,196,247,0.25) 55%, transparent);
+  opacity: 0; transition: opacity .8s ease; pointer-events: none;
+}
+.screen.on::before { opacity: 1; }
+.screen > img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: 100%; object-fit: cover; object-position: top; }
+
+/* ---------- скриншоты ---------- */
+.shots { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; justify-items: center; }
+.shot { margin: 0; display: grid; gap: 14px; justify-items: center; text-align: center; width: 100%; max-width: 260px; }
+.shot .phone { width: 100%; border-radius: 44px; padding: 9px; }
+.shot .screen { border-radius: 36px; }
+.shot figcaption b { display: block; font-size: 17px; }
+.shot figcaption span { color: var(--muted); font-size: 15px; }
+@media (max-width: 760px) {
+  .shots { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 72%; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 8px; justify-items: stretch; }
+  .shot { scroll-snap-align: center; max-width: none; }
+}
+.island { width: 92px; height: 26px; border-radius: 20px; background: #000; flex: none; }
+.app-top { display: flex; width: 100%; justify-content: space-between; align-items: center; margin-top: 16px; position: relative; }
+.app-top .logo { font-size: 15px; }
+.app-top .logo-mark { width: 18px; height: 18px; border-radius: 6px; }
+.app-top .logo-mark::after { inset: 4px; background: #070a0f; }
+.pill { font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 999px; background: var(--surface-2); color: var(--muted); letter-spacing: 0.04em; }
+.status { margin-top: 34px; font-size: 13px; color: var(--muted); position: relative; display: flex; align-items: center; gap: 7px; }
+.status i { width: 7px; height: 7px; border-radius: 50%; background: #5b6474; }
+.screen.on .status i { background: var(--green); box-shadow: 0 0 10px var(--green); }
+.screen.connecting .status i { background: var(--cyan); animation: blink .7s infinite; }
+@keyframes blink { 50% { opacity: .25; } }
+.timer { font-family: var(--mono); font-size: 26px; font-weight: 600; letter-spacing: 0.02em; margin-top: 4px; position: relative; font-variant-numeric: tabular-nums; }
+.power {
+  position: relative; margin-top: 26px; width: 136px; height: 136px; border-radius: 50%;
+  border: 0; cursor: pointer; flex: none;
+  background: radial-gradient(circle at 50% 35%, #1d2430, #0c1016 70%);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 14px 40px -10px rgba(0,0,0,0.9);
+  display: grid; place-items: center; transition: transform .15s ease;
+}
+.power:active { transform: scale(.96); }
+.power::before {
+  content: ""; position: absolute; inset: -7px; border-radius: 50%; padding: 3px;
+  background: conic-gradient(from 0deg, var(--green), var(--cyan), var(--violet), var(--green));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  opacity: .18; transition: opacity .5s ease;
+}
+.screen.connecting .power::before { opacity: 1; animation: spin 1.1s linear infinite; }
+.screen.on .power::before { opacity: 1; }
+.screen.on .power { box-shadow: 0 0 60px -6px rgba(62, 242, 176, 0.6), inset 0 1px 0 rgba(255,255,255,0.1); }
+@keyframes spin { to { rotate: 360deg; } }
+.power svg { width: 46px; height: 46px; stroke: #5b6474; transition: stroke .4s ease; }
+.screen.on .power svg, .screen.connecting .power svg { stroke: var(--green); }
+.ip { margin-top: 22px; font-size: 12px; color: var(--muted); position: relative; text-align: center; }
+.ip b { display: block; color: var(--fg); font-family: var(--mono); font-size: 13px; font-weight: 500; margin-top: 2px; }
+.server {
+  margin-top: auto; width: 100%; display: flex; align-items: center; gap: 12px;
+  padding: 11px 12px; border-radius: 18px; border: 1px solid var(--line);
+  background: rgba(21, 27, 35, 0.85); cursor: pointer; text-align: left; position: relative;
+}
+.cc {
+  width: 34px; height: 34px; border-radius: 11px; flex: none; display: grid; place-items: center;
+  font-size: 11px; font-weight: 800; letter-spacing: 0.03em;
+  background: linear-gradient(140deg, rgba(62,242,176,.22), rgba(59,196,247,.18)); color: var(--green);
+}
+.server b { display: block; font-size: 14px; font-weight: 600; }
+.server small { display: block; font-size: 12px; color: var(--muted); }
+.server .chev { margin-left: auto; color: var(--muted); font-size: 18px; }
+.speeds { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; width: 100%; margin-top: 8px; position: relative; }
+.speeds div { padding: 9px 12px; border-radius: 14px; background: rgba(21, 27, 35, 0.85); border: 1px solid var(--line); }
+.speeds small { display: block; font-size: 11px; color: var(--muted); }
+.speeds b { font-family: var(--mono); font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.sheet {
+  position: absolute; inset: auto 0 0; z-index: 5; padding: 10px 12px 18px;
+  background: #10151c; border-top: 1px solid var(--line); border-radius: 26px 26px 0 0;
+  display: grid; gap: 4px;
+}
+.sheet-handle { width: 36px; height: 5px; border-radius: 3px; background: #2a323e; margin: 0 auto 8px; }
+.sheet-title { font-size: 13px; font-weight: 600; color: var(--muted); padding: 0 8px 4px; }
+.sheet button {
+  display: flex; align-items: center; gap: 12px; width: 100%; padding: 8px 8px; border: 0;
+  border-radius: 14px; background: transparent; cursor: pointer; text-align: left;
+}
+.sheet button:hover, .sheet button[aria-current="true"] { background: var(--surface-2); }
+.sheet b { font-size: 14px; font-weight: 600; display: block; }
+.sheet small { font-size: 12px; color: var(--muted); display: block; }
+.sheet .ping { margin-left: auto; font-family: var(--mono); font-size: 12px; color: var(--green); }
+.hint { margin-top: 18px; font-size: 13px; color: var(--muted); }
+
+/* ---------- разделы ---------- */
+section { padding-block: 96px; }
+.section-head { text-align: center; margin-bottom: 48px; }
+h2 {
+  margin: 0; font-size: clamp(2rem, 5vw, 3.4rem); line-height: 1.06; font-weight: 800;
+  letter-spacing: -0.035em; text-wrap: balance;
+}
+.section-head p { margin: 14px auto 0; max-width: 46ch; color: var(--muted); font-size: 19px; text-wrap: balance; }
+
+/* бенто */
+.bento { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; }
+.tile {
+  grid-column: span 2; min-width: 0; position: relative; overflow: hidden;
+  background: var(--surface); border-radius: 28px; padding: 30px;
+  border: 1px solid var(--line); display: flex; flex-direction: column; gap: 10px;
+}
+.tile.wide { grid-column: span 3; }
+.tile.big { grid-column: span 4; }
+.tile h3 { margin: 0; font-size: 24px; line-height: 1.15; letter-spacing: -0.02em; font-weight: 700; text-wrap: balance; }
+.tile p { margin: 0; color: var(--muted); font-size: 16px; }
+.tile .kicker { font-size: 13px; font-weight: 600; color: var(--green); letter-spacing: 0.02em; }
+.tile .num {
+  font-size: clamp(3rem, 7vw, 4.6rem); font-weight: 800; letter-spacing: -0.05em; line-height: 1;
+  background: linear-gradient(120deg, var(--green), var(--cyan)); -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.tile.glow::after {
+  content: ""; position: absolute; right: -60px; bottom: -80px; width: 260px; height: 200px; border-radius: 50%;
+  background: var(--cyan); filter: blur(70px); opacity: .25; pointer-events: none;
+}
+.lock { width: 54px; height: 54px; }
+.lock path, .lock rect { fill: none; stroke: var(--green); stroke-width: 1.6; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; padding-top: 12px; }
+.chips span { font-size: 13px; padding: 6px 12px; border-radius: 999px; background: var(--surface-2); color: var(--fg); border: 1px solid var(--line); }
+@media (max-width: 860px) {
+  .bento { grid-template-columns: 1fr 1fr; }
+  .tile, .tile.wide { grid-column: span 1; }
+  .tile.big { grid-column: span 2; }
+}
+@media (max-width: 560px) {
+  .bento { grid-template-columns: 1fr; }
+  .tile, .tile.wide, .tile.big { grid-column: span 1; }
+}
+
+/* компьютер */
+.window {
+  margin: 0; position: relative; overflow: hidden; border-radius: 16px;
+  border: 1px solid var(--line); background: var(--surface);
+  box-shadow: 0 40px 100px -40px rgba(59, 196, 247, 0.35), 0 20px 50px -20px rgba(0,0,0,0.8);
+}
+.window img { display: block; width: 100%; height: auto; max-width: 100%; }
+.window-bar { display: none; }
+.duo { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+.window.small { border-radius: 12px; }
+.window.small figcaption {
+  position: absolute; left: 12px; bottom: 12px; font-size: 13px; font-weight: 600;
+  padding: 5px 11px; border-radius: 999px; background: rgba(4, 6, 10, 0.75); color: var(--fg);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+}
+@media (max-width: 640px) { .duo { grid-template-columns: 1fr; } }
+
+/* кастомизация */
+.bgs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; margin-bottom: 40px; }
+.bg-card { margin: 0; position: relative; overflow: hidden; border-radius: 18px; aspect-ratio: 3 / 4; max-width: 100%; border: 1px solid var(--line); }
+.bg-card img { width: 100%; height: 100%; max-width: 100%; object-fit: cover; object-position: 72% 30%; transform: scale(1.5); transform-origin: 72% 30%; transition: transform .5s ease; }
+.bg-card:hover img { transform: scale(1.6); }
+.bg-card figcaption {
+  position: absolute; left: 10px; bottom: 10px; font-size: 13px; font-weight: 600;
+  padding: 5px 11px; border-radius: 999px; background: rgba(4, 6, 10, 0.6); color: var(--fg);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+}
+@media (max-width: 760px) {
+  .bgs { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 42%; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 8px; }
+  .bg-card { scroll-snap-align: start; }
+}
+.custom-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 36px; align-items: center; }
+.custom-grid > * { min-width: 0; }
+.custom-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; }
+.custom-list li { display: grid; gap: 2px; padding-left: 18px; position: relative; }
+.custom-list li::before { content: ""; position: absolute; left: 0; top: 9px; width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 10px var(--green); }
+.custom-list b { font-size: 17px; }
+.custom-list span { color: var(--muted); font-size: 15px; }
+@media (max-width: 860px) { .custom-grid { grid-template-columns: 1fr; } }
+
+/* шаги */
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; counter-reset: step; }
+.step { min-width: 0; padding: 26px 4px 0; border-top: 1px solid var(--line); }
+.step::before {
+  counter-increment: step; content: counter(step);
+  display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%;
+  background: var(--surface-2); color: var(--green); font-weight: 700; font-size: 15px; margin-bottom: 16px;
+}
+.step h3 { margin: 0 0 6px; font-size: 20px; letter-spacing: -0.015em; }
+.step p { margin: 0; color: var(--muted); font-size: 16px; }
+@media (max-width: 720px) { .steps { grid-template-columns: 1fr; } }
+
+/* тарифы */
+.plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; align-items: stretch; }
+.plan {
+  min-width: 0; display: flex; flex-direction: column; gap: 6px; padding: 30px; border-radius: 28px;
+  background: var(--surface); border: 1px solid var(--line); position: relative;
+}
+.plan.best { border-color: transparent; background: linear-gradient(var(--surface), var(--surface)) padding-box, linear-gradient(140deg, var(--green), var(--cyan), var(--violet)) border-box; border: 1.5px solid transparent; }
+.plan .tag { position: absolute; top: 18px; right: 18px; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 999px; background: var(--green); color: var(--on-accent); }
+.plan h3 { margin: 0; font-size: 18px; font-weight: 600; color: var(--muted); }
+.price { font-size: 44px; font-weight: 800; letter-spacing: -0.04em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.price small { font-size: 17px; font-weight: 500; color: var(--muted); letter-spacing: 0; }
+.per { font-size: 14px; color: var(--muted); min-height: 21px; }
+.plan ul { list-style: none; margin: 16px 0 24px; padding: 0; display: grid; gap: 9px; font-size: 15px; }
+.plan li { display: flex; gap: 10px; }
+.plan li::before { content: ""; flex: none; width: 16px; height: 16px; margin-top: 3px; border-radius: 50%; background: radial-gradient(circle, var(--green) 35%, rgba(62,242,176,.18) 40%); }
+.plan .btn { margin-top: auto; width: 100%; }
+.plan:not(.best) .btn { background: var(--surface-2); color: var(--fg); border: 1px solid var(--line); }
+@media (max-width: 860px) { .plans { grid-template-columns: 1fr; max-width: 440px; margin: 0 auto; } }
+
+/* платформы */
+.platforms { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+.platforms a {
+  display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 150px;
+  padding: 18px 22px; border-radius: 22px; background: var(--surface); border: 1px solid var(--line);
+  transition: border-color .2s ease, transform .2s ease;
+}
+.platforms a:hover { border-color: rgba(62,242,176,.45); transform: translateY(-2px); }
+.platforms b { font-size: 18px; }
+.platforms small { color: var(--muted); font-size: 13px; }
+.alt-links { margin: 22px 0 0; text-align: center; color: var(--muted); font-size: 14px; }
+.alt-links a { color: var(--cyan); }
+.alt-links a:hover { text-decoration: underline; }
+
+/* вопросы */
+.faq { max-width: 760px; margin: 0 auto; }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary {
+  list-style: none; cursor: pointer; padding: 22px 0; font-size: 19px; font-weight: 600;
+  display: flex; justify-content: space-between; gap: 16px; letter-spacing: -0.01em;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; color: var(--muted); font-weight: 400; font-size: 24px; line-height: 1; transition: rotate .25s ease; }
+.faq details[open] summary::after { rotate: 45deg; }
+.faq details p { margin: 0 0 22px; color: var(--muted); max-width: 62ch; }
+
+footer { border-top: 1px solid var(--line); padding-block: 36px 48px; color: var(--muted); font-size: 13px; }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 28px; align-items: center; }
+footer nav { display: flex; gap: 20px; margin-left: auto; flex-wrap: wrap; }
+footer a:hover { color: var(--fg); }
+
+@media (max-width: 560px) {
+  section { padding-block: 72px; }
+  .tile, .plan { padding: 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto; }
+}
+</style>
+
+</head>
+<body>
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="Aurora VPN, наверх"><span class="logo-mark"></span>Aurora</a>
+    <nav class="nav-links" aria-label="Разделы">
+      <a href="#features">Возможности</a>
+      <a href="#customize">Кастомизация</a>
+      <a href="#how">Как начать</a>
+      <a href="#download">Скачать</a>
+      <a href="#faq">Вопросы</a>
+    </nav>
+    <a class="nav-cta" href="#download">Скачать</a>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="aurora" aria-hidden="true"><span class="a1"></span><span class="a2"></span><span class="a3"></span></div>
+    <div class="wrap">
+      <div class="eyebrow">Aurora VPN</div>
+      <h1>Интернет <span class="glow-text">без&nbsp;границ.</span></h1>
+      <p class="lead">Бесплатное приложение для VPN. <b>Вставьте свой ключ и нажмите одну кнопку.</b></p>
+      <div class="actions">
+        <a class="btn" href="#download">Скачать бесплатно</a>
+        <a class="link" href="#features">Узнать больше</a>
+      </div>
+
+      <div class="device-stage">
+        <div class="phone">
+          <div class="screen"><img src="assets/screens/connected.jpg" alt="Aurora: VPN подключён, видна скорость и выбранный сервер" width="390" height="844"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section id="screens">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Так выглядит <span class="glow-text">Aurora.</span></h2>
+        <p>Настоящие экраны приложения.</p>
+      </div>
+      <div class="shots">
+        <figure class="shot">
+          <div class="phone"><div class="screen"><img src="assets/screens/main.jpg" alt="Главный экран Aurora с кнопкой подключения" width="780" height="1688" loading="lazy"></div></div>
+          <figcaption><b>Главный экран</b><span>Одна кнопка для подключения</span></figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="phone"><div class="screen"><img src="assets/screens/connected.jpg" alt="Aurora подключена: скорость, пинг и время подключения" width="390" height="844" loading="lazy"></div></div>
+          <figcaption><b>Подключено</b><span>Скорость и пинг в реальном времени</span></figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="phone"><div class="screen"><img src="assets/screens/servers.jpg" alt="Список серверов Aurora с избранным и пингом" width="390" height="844" loading="lazy"></div></div>
+          <figcaption><b>Серверы</b><span>Избранное, поиск и пинг</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="features">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Всё нужное. <span class="glow-text">Ничего лишнего.</span></h2>
+        <p>Aurora сделан так, чтобы о нём не приходилось думать. Вставили ключ, включили и пользуетесь интернетом как обычно.</p>
+      </div>
+      <div class="bento">
+        <article class="tile big glow">
+          <span class="kicker">Свой ключ</span>
+          <h3>Вставили ключ, нажали кнопку. Всё.</h3>
+          <p>Подходят ключи и подписки из Happ, v2rayN, Hiddify и других клиентов. Можно вставить сразу несколько, по одному на строку.</p>
+          <div class="chips"><span>VLESS</span><span>VMess</span><span>Trojan</span><span>Shadowsocks</span><span>Hysteria2</span><span>TUIC</span></div>
+        </article>
+        <article class="tile">
+          <span class="num">0 ₽</span>
+          <h3>Приложение бесплатное</h3>
+          <p>Скачать и пользоваться можно без оплаты и подписок.</p>
+        </article>
+        <article class="tile">
+          <span class="kicker">Маршрутизация</span>
+          <h3>Российские сайты напрямую</h3>
+          <p>Госуслуги, банки и сайты .ru открываются без VPN. Для остальных сайтов и приложений можно задать свои правила.</p>
+        </article>
+        <article class="tile">
+          <span class="kicker">Режимы</span>
+          <h3>Proxy или TUN</h3>
+          <p>TUN пускает через VPN все программы на компьютере. Proxy включает системный прокси.</p>
+        </article>
+        <article class="tile">
+          <span class="kicker">Серверы</span>
+          <h3>Пинг, избранное и Auto</h3>
+          <p>Aurora проверит пинг и подключит к самому быстрому серверу из подписки.</p>
+        </article>
+        <article class="tile wide">
+          <span class="kicker">Discord</span>
+          <h3>Статус в профиле Discord.</h3>
+          <p>Пока VPN включён, в профиле видно, к какому серверу вы подключены. Можно выключить в настройках.</p>
+        </article>
+        <article class="tile wide">
+          <span class="kicker">Устройства</span>
+          <h3>На телефоне и на компьютере.</h3>
+          <div class="chips"><span>Android</span><span>Windows</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="desktop">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Aurora на <span class="glow-text">компьютере.</span></h2>
+        <p>Все серверы слева, кнопка подключения и скорость справа. Режимы Off, Proxy и TUN переключаются в одно касание.</p>
+      </div>
+      <figure class="window">
+        <div class="window-bar" aria-hidden="true"><i></i><i></i><i></i></div>
+        <img src="assets/screens/pc/pc-main.png" alt="Aurora для Windows: список серверов, скорость и кнопки режимов" width="1120" height="720" loading="lazy">
+      </figure>
+      <div class="duo">
+        <figure class="window small">
+          <img src="assets/screens/pc/pc-routing.png" alt="Меню маршрутизации: весь трафик через VPN или российские сайты напрямую" width="1120" height="720" loading="lazy">
+          <figcaption>Маршрутизация</figcaption>
+        </figure>
+        <figure class="window small">
+          <img src="assets/screens/pc/theme-light.png" alt="Aurora в светлой теме" width="1120" height="720" loading="lazy">
+          <figcaption>Светлая тема</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="customize">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Сделайте Aurora <span class="glow-text">своей.</span></h2>
+        <p>Выберите живой фон, тему и язык. Или поставьте на фон своё видео.</p>
+      </div>
+      <div class="bgs">
+        <figure class="bg-card"><img src="assets/screens/pc/pc-main.png" alt="Фон Аврора" loading="lazy"><figcaption>Аврора</figcaption></figure>
+        <figure class="bg-card"><img src="assets/screens/pc/bg-nebula.png" alt="Фон Туманность" loading="lazy"><figcaption>Туманность</figcaption></figure>
+        <figure class="bg-card"><img src="assets/screens/pc/bg-sunset.png" alt="Фон Закат" loading="lazy"><figcaption>Закат</figcaption></figure>
+        <figure class="bg-card"><img src="assets/screens/pc/bg-stars.png" alt="Фон Звёзды" loading="lazy"><figcaption>Звёзды</figcaption></figure>
+        <figure class="bg-card"><img src="assets/screens/pc/bg-globe.png" alt="Фон Глобус с серверами на карте" loading="lazy"><figcaption>Глобус</figcaption></figure>
+      </div>
+      <div class="custom-grid">
+        <figure class="window">
+          <img src="assets/screens/pc/pc-look.png" alt="Настройки персонализации: тема, язык, анимация и фон" width="1120" height="720" loading="lazy">
+        </figure>
+        <ul class="custom-list">
+          <li><b>5 живых фонов</b><span>Аврора, Туманность, Закат, Звёзды и Глобус. На глобусе видно, где стоят ваши серверы.</span></li>
+          <li><b>Своё видео</b><span>Выберите любой видеофайл, и он будет крутиться на главном экране.</span></li>
+          <li><b>Тёмная и светлая тема</b><span>Под ваш рабочий стол.</span></li>
+          <li><b>Экономная анимация</b><span>Почти не нагружает компьютер. В свёрнутом окне фон не рисуется вообще.</span></li>
+          <li><b>Русский и English</b><span>Язык переключается в настройках.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Начать можно за минуту.</h2>
+      </div>
+      <div class="steps">
+        <div class="step"><h3>Скачайте приложение</h3><p>Для Android или Windows, ссылки ниже на странице.</p></div>
+        <div class="step"><h3>Вставьте ключ</h3><p>Скопируйте свой ключ и вставьте его в приложение.</p></div>
+        <div class="step"><h3>Нажмите кнопку</h3><p>Готово. Таймер на экране покажет, что подключение работает.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="download">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Скачайте Aurora бесплатно.</h2>
+        <p>Выберите своё устройство.</p>
+      </div>
+      <div class="platforms">
+        <a href="https://github.com/heavilyoffc/aurora-vpn/releases/latest/download/Aurora.apk" target="_blank" rel="noopener"><b>Android</b><small>Скачать .apk · 35 МБ</small></a>
+        <a href="https://github.com/heavilyoffc/aurora-vpn/releases/latest/download/Aurora-Setup.exe" target="_blank" rel="noopener"><b>Windows</b><small>Скачать установщик · 134 МБ</small></a>
+      </div>
+      <p class="alt-links">Windows без установки: <a href="https://github.com/heavilyoffc/aurora-vpn/releases/latest/download/Aurora-portable.exe" target="_blank" rel="noopener">Aurora-portable.exe</a> · <a href="https://github.com/heavilyoffc/aurora-vpn/releases" target="_blank" rel="noopener">Все версии</a></p>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <div class="section-head"><h2>Вопросы и ответы.</h2></div>
+      <div class="faq">
+        <details><summary>Что такое ключ и где его взять?</summary><p>Ключ — это строка с настройками подключения к VPN-серверу. Его выдаёт VPN-сервис или человек, который настроил сервер. Aurora — это приложение для подключения: серверы и ключи мы не продаём.</p></details>
+        <details><summary>Приложение правда бесплатное?</summary><p>Да. Скачать Aurora и пользоваться им можно без оплаты, подписок и рекламы.</p></details>
+        <details><summary>Есть ли Aurora для iPhone и Mac?</summary><p>Пока нет. Сейчас приложение работает на Android и Windows.</p></details>
+        <details><summary>Как связаться с поддержкой?</summary><p>Напишите нам в Telegram. Обычно отвечаем в течение дня.</p></details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <a class="logo" href="#top"><span class="logo-mark"></span>Aurora</a>
+    <span>© 2026 Aurora VPN</span>
+    <nav aria-label="Документы">
+      <a href="#faq">Поддержка</a>
+      <a href="#top">Политика конфиденциальности</a>
+      <a href="#top">Условия использования</a>
+    </nav>
+  </div>
+</footer>
+</body>
+</html>

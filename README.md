@@ -19,6 +19,8 @@
 &nbsp;
 <a href="https://github.com/heavilyoffc/aurora-vpn/releases/latest/download/Aurora-Setup.exe"><img src="https://img.shields.io/badge/Скачать_для_Windows-.exe-3BC4F7?style=for-the-badge&logo=windows&logoColor=04060a" alt="Скачать для Windows" height="44"></a>
 
+<sub>🌐 Сайт: <a href="https://heavilyoffc.github.io/aurora-vpn/">heavilyoffc.github.io/aurora-vpn</a></sub>
+<br>
 <sub>Windows без установки: <a href="https://github.com/heavilyoffc/aurora-vpn/releases/latest/download/Aurora-portable.exe">Aurora-portable.exe</a> · Все версии: <a href="https://github.com/heavilyoffc/aurora-vpn/releases">Releases</a></sub>
 
 </div>
