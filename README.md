@@ -19,6 +19,8 @@
 &nbsp;
 <a href="https://github.com/heavilyoffc/aurora-vpn/releases/latest/download/Aurora-Setup.exe"><img src="https://img.shields.io/badge/Скачать_для_Windows-.exe-3BC4F7?style=for-the-badge&logo=windows&logoColor=04060a" alt="Скачать для Windows" height="44"></a>
 
+<sub>Windows без установки: <a href="https://github.com/heavilyoffc/aurora-vpn/releases/latest/download/Aurora-portable.exe">Aurora-portable.exe</a> · Все версии: <a href="https://github.com/heavilyoffc/aurora-vpn/releases">Releases</a></sub>
+
 </div>
 
 <br>
@@ -59,8 +61,21 @@
 1. Скачайте файл `Aurora-Setup.exe` и запустите его.
 2. Если появится синее окно **«Windows защитила ваш компьютер»**, нажмите **«Подробнее»**, затем **«Выполнить в любом случае»**.
 3. Следуйте шагам установщика.
+4. При запуске Aurora попросит права администратора. Они нужны, чтобы включать VPN.
+
+Не хотите устанавливать? Скачайте `Aurora-portable.exe` и просто запустите его.
 
 </details>
+
+## ✦ Обновления
+
+Aurora для Windows умеет обновляться сам. Откройте **Настройки → Обновления** и в поле **GitHub-репозиторий** укажите:
+
+```
+heavilyoffc/aurora-vpn
+```
+
+Когда здесь выйдет новая версия, приложение предложит её скачать.
 
 ## ✦ Вопросы
 
