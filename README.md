@@ -27,6 +27,19 @@
 
 ## ✦ Скриншоты
 
+### Windows
+
+<img src="assets/screens/pc/pc-main.png" alt="Aurora для Windows" width="100%">
+
+<table>
+<tr>
+<td width="50%"><img src="assets/screens/pc/pc-routing.png" alt="Маршрутизация"><p align="center"><sub><b>Маршрутизация</b></sub></p></td>
+<td width="50%"><img src="assets/screens/pc/theme-light.png" alt="Светлая тема"><p align="center"><sub><b>Светлая тема</b></sub></p></td>
+</tr>
+</table>
+
+### Android
+
 <div align="center">
 <img src="assets/screens/main.jpg" alt="Главный экран" width="240">
 &nbsp;&nbsp;
@@ -41,11 +54,35 @@
 
 | | |
 |---|---|
-| 🔑 **Свой ключ** | Вставьте ключ, который вам дали, и приложение само всё настроит. |
+| 🔑 **Свой ключ** | Подходят ключи и подписки из Happ, v2rayN, Hiddify и других клиентов: VLESS, VMess, Trojan, Shadowsocks, Hysteria2, TUIC. |
 | ⚡ **Одна кнопка** | Подключение и отключение одним касанием. |
-| 🗂 **Несколько ключей** | Храните основной и запасной ключ и переключайтесь между ними. |
+| 🧭 **Маршрутизация** | Российские сайты напрямую или весь трафик через VPN. Свои правила для сайтов и приложений. |
+| 🖥 **Proxy и TUN** | TUN пускает через VPN все программы на компьютере, Proxy включает системный прокси. |
+| 📶 **Пинг и Auto** | Проверка пинга, избранное и автоматический выбор самого быстрого сервера. |
+| 🎮 **Discord** | Статус в профиле Discord, пока VPN включён. Выключается в настройках. |
 | 💸 **Бесплатно** | Без оплаты и подписок. |
 | 🚫 **Без рекламы** | Ни баннеров, ни всплывающих окон. |
+
+## ✦ Кастомизация
+
+<table>
+<tr>
+<td width="33%"><img src="assets/screens/pc/pc-main.png" alt="Аврора"><p align="center"><sub><b>Аврора</b></sub></p></td>
+<td width="33%"><img src="assets/screens/pc/bg-nebula.png" alt="Туманность"><p align="center"><sub><b>Туманность</b></sub></p></td>
+<td width="33%"><img src="assets/screens/pc/bg-sunset.png" alt="Закат"><p align="center"><sub><b>Закат</b></sub></p></td>
+</tr>
+<tr>
+<td><img src="assets/screens/pc/bg-stars.png" alt="Звёзды"><p align="center"><sub><b>Звёзды</b></sub></p></td>
+<td><img src="assets/screens/pc/bg-globe.png" alt="Глобус"><p align="center"><sub><b>Глобус</b></sub></p></td>
+<td><img src="assets/screens/pc/pc-look.png" alt="Настройки персонализации"><p align="center"><sub><b>Настройки</b></sub></p></td>
+</tr>
+</table>
+
+- 🌌 **5 живых фонов:** Аврора, Туманность, Закат, Звёзды и Глобус. На глобусе видно, где стоят ваши серверы.
+- 🎬 **Своё видео:** выберите любой видеофайл, и он будет крутиться на главном экране.
+- 🌗 **Тёмная и светлая тема.**
+- 🔋 **Экономная анимация:** почти не нагружает компьютер, а в свёрнутом окне фон не рисуется вообще.
+- 🌍 **Русский и English.**
 
 ## ✦ Как начать
 
